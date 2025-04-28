@@ -240,7 +240,7 @@ void print_title() {
 
 void print_outside() {
   // Subtract 1 for the null character
-  for (int y = 0; y < (OTHER_ART_HEIGHT - 1); y++) {
+  for (int y = 0; y < (OTHER_ART_HEIGHT); y++) {
     delay(25); // Gives old internet vibes
     for (int x = 0; x < (OTHER_ART_WIDTH - 1); x++) {
       delay(1);

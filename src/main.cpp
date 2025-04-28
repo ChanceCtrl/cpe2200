@@ -12,23 +12,17 @@ void setup() {
 void loop() {
   // Get the name
   Serial.print("Whats is their name?\n");
-  Serial.readBytesUntil('\r', fella, sizeof(fella));
+  Serial.readBytesUntil('\r', fella, sizeof(fella) - 1);
+  fella[sizeof(fella) - 1] = '\0';
+  string_fella = String(fella);
   Serial.println();
 
   // Eat spare chars
   while (Serial.available())
     Serial.read();
 
-  Serial.print("And will ");
-  for (int i = 0; i < sizeof(fella); i++) {
-    if ((fella[i] >= 65 && fella[i] <= 90) ||
-        (fella[i] >= 61 && fella[i] <= 122)) {
-      Serial.write(fella[i]);
-      delay(50);
-    }
-  }
-
-  Serial.print("'s escape be Hard(0) or Easy(1)?\n");
+  Serial.print("And will " + string_fella +
+               "'s escape be Hard(0) or Easy(1)?\n");
   int target_dif = Serial.parseInt();
   Serial.println();
 
@@ -74,7 +68,7 @@ void loop() {
 
   delay(2000);
 
-  Serial.print("(1) Again?\t(0) Or not?\n");
+  Serial.print("(1) Play Again?\t(0) Or not?\n");
   int try_again = Serial.parseInt();
 
   // Eat spare chars

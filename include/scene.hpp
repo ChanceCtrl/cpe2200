@@ -32,6 +32,8 @@ public:
         String option_2_text, uint16_t option_2_val, String option_3_text,
         uint16_t option_3_val, String option_4_text, uint16_t option_4_val,
         void (*enter_func)()) {
+    this->intro_text = intro_text;
+
     this->option_1_text = option_1_text;
     this->option_2_text = option_2_text;
     this->option_3_text = option_3_text;
@@ -50,6 +52,8 @@ public:
   scene(String intro_text, String option_1_text, uint16_t option_1_val,
         String option_2_text, uint16_t option_2_val, String option_3_text,
         uint16_t option_3_val, String option_4_text, uint16_t option_4_val) {
+    this->intro_text = intro_text;
+
     this->option_1_text = option_1_text;
     this->option_2_text = option_2_text;
     this->option_3_text = option_3_text;
@@ -69,6 +73,8 @@ public:
         String option_1_text, uint16_t option_1_val, String option_2_text,
         uint16_t option_2_val, String option_3_text, uint16_t option_3_val,
         String option_4_text, uint16_t option_4_val, void (*enter_func)()) {
+    this->intro_text = intro_text;
+
     this->option_1_text = option_1_text;
     this->option_2_text = option_2_text;
     this->option_3_text = option_3_text;
@@ -92,6 +98,8 @@ public:
         String option_1_text, uint16_t option_1_val, String option_2_text,
         uint16_t option_2_val, String option_3_text, uint16_t option_3_val,
         String option_4_text, uint16_t option_4_val) {
+    this->intro_text = intro_text;
+
     this->option_1_text = option_1_text;
     this->option_2_text = option_2_text;
     this->option_3_text = option_3_text;
@@ -115,6 +123,8 @@ public:
         void (*warning_call)(), String option_1_text, uint16_t option_1_val,
         String option_2_text, uint16_t option_2_val, String option_3_text,
         uint16_t option_3_val, String option_4_text, uint16_t option_4_val) {
+    this->intro_text = intro_text;
+
     this->option_1_text = option_1_text;
     this->option_2_text = option_2_text;
     this->option_3_text = option_3_text;
@@ -140,6 +150,8 @@ public:
         String option_2_text, uint16_t option_2_val, String option_3_text,
         uint16_t option_3_val, String option_4_text, uint16_t option_4_val,
         void (*enter_func)()) {
+    this->intro_text = intro_text;
+
     this->option_1_text = option_1_text;
     this->option_2_text = option_2_text;
     this->option_3_text = option_3_text;
@@ -165,11 +177,13 @@ public:
       on_enter_call();
     }
 
-    Serial.println(intro_text);
+    if (intro_text != "") {
+      Serial.println('\n' + intro_text);
+    }
 
     // Don't print unused options
     if (option_1_text != "") {
-      Serial.print("\n1: ");
+      Serial.print("1: ");
       Serial.println(option_1_text);
     }
 
@@ -187,8 +201,6 @@ public:
       Serial.print("4: ");
       Serial.println(option_4_text);
     }
-
-    Serial.print("What will you do?\n");
   }
 
   void time_print() {
