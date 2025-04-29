@@ -7,19 +7,12 @@
 #include "scene.hpp"
 #include "timeMan.hpp"
 
-bool is_won = false;
-
-char fella[100];
-String string_fella = String(fella);
-
-const String fella_string = "Chance";
+#define SCENE_COUNT 50
 
 int HARD_TTK = 6;
 int EASY_TTK = 12;
-const int SCENE_COUNT = 50;
 
-uint16_t test_count = 0;
-
+bool is_won = false;
 bool has_warned = false;
 bool has_warned2 = false;
 
@@ -32,8 +25,8 @@ void time_warn() {
 
 void time_warn_2() {
   if (!has_warned2) {
-    Serial.println(fella_string + " sees some scribbles on the wall that look "
-                                  "like some arrows... <- -> <- ↑");
+    Serial.println("They see some scribbles on the wall that look "
+                   "like some arrows... <- -> <- ↑");
   }
 }
 
@@ -57,16 +50,17 @@ timeMan easy_timer(EASY_TTK, false);
 class sceneMan {
 private:
   uint16_t scene_index = 1;
+  String pcn;
 
   void final_check() {
     if (has_object) {
       Serial.println(
           "The trinket seems to light up, and after a breif white flash " +
-          fella_string + "passes out");
+          pcn + "passes out");
 
       set_scene(17);
     } else if (has_MLS) {
-      Serial.println("This fuzzy feeling spreads across " + fella_string +
+      Serial.println("This fuzzy feeling spreads across " + pcn +
                      "'s body, as time goes on they notice that the feeling is "
                      "going away, and so was pretty much every feeling... they "
                      "drift off to sleep");
@@ -89,68 +83,63 @@ private:
       scene("How did you get here?", "", 0, "", 0, "", 0, "", 0),
 
       // 1
-      scene("", "Log in " + fella_string + "?", 2, "", 0, "", 0, "", 0,
-            &print_title),
+      scene("", "Log in " + pcn + "?", 2, "", 0, "", 0, "", 0, &print_title),
 
       // 2
       scene("The terminal flickers a few times, and then goes blank...",
-            fella_string + " sees some group of people come into the room", 4,
-            "Try to log off...", 3, "Leave " + fella_string + "'s desk", 5, "",
-            3, "", 3),
+            pcn + " sees some group of people come into the room", 4,
+            "Try to log off...", 3, "Leave " + pcn + "'s desk", 5, "", 3, "",
+            3),
       // 3
-      scene(fella_string +
-                " attempts to shut off the computer and leave the building, "
-                "but they are stopped at the door and told to get back to "
-                "work",
+      scene(pcn + " attempts to shut off the computer and leave the building, "
+                  "but they are stopped at the door and told to get back to "
+                  "work",
             "Go back", 2, "", 0, "", 0, "", 0),
 
       // 4
-      scene("Soon armed people surrond " + fella_string +
+      scene("Soon armed people surrond " + pcn +
                 ", and their cubical is gone the next day...",
             "", 4, "", 4, "", 4, "", 4, "", 4, &player_is_kill),
 
       // 5
-      scene(fella_string +
-                " starts to wander, soon finding themselves in a hallway",
+      scene(pcn + " starts to wander, soon finding themselves in a hallway",
             "They hear some group of people getting closer and start to walk "
             "faster...",
             6, "Go to restroom", 13, "Continue down the halls", 6, "", 3, "",
             4),
 
       // 6
-      scene(fella_string +
-                " notices that the halls are slowly turning from "
-                "simple black trim and cream carpet style to a smooth "
-                "silver corridor as they go down a series of stairs",
+      scene(pcn + " notices that the halls are slowly turning from "
+                  "simple black trim and cream carpet style to a smooth "
+                  "silver corridor as they go down a series of stairs",
             "Look at the patterns", 7, "Run faster", 9, "", 0, "", 0),
 
       // 7
-      scene(fella_string + " looks at the walls a little closer, finding "
-                           "the name of the "
-                           "company embossed on the surface, hundreds of "
-                           "times per square "
-                           "foot, but still readable... As they run their "
-                           "fingers across it "
-                           "they feel a static charge and are soon "
-                           "eletrecuted to death...",
+      scene(pcn + " looks at the walls a little closer, finding "
+                  "the name of the "
+                  "company embossed on the surface, hundreds of "
+                  "times per square "
+                  "foot, but still readable... As they run their "
+                  "fingers across it "
+                  "they feel a static charge and are soon "
+                  "eletrecuted to death...",
             "", 0, "", 0, "", 0, "", 0, &player_is_kill),
 
       // 8  NOTE: UNUSED
-      scene(fella_string +
-                " hears what they assume now to be the companies PMC "
-                "and start running",
+      scene(pcn + " hears what they assume now to be the companies PMC "
+                  "and start running",
             "", 0, "", 0, "", 0, "", 0),
 
       // 9
-      scene(fella_string + " starts to feel their hair rise...",
-            "soon a charge forms on the walls and zaps " + fella_string, 49,
+      scene(pcn + " starts to feel their hair rise...",
+            "soon a charge forms on the walls and zaps " + pcn, 49,
             "Stand in place", 10, "Dive to the ground", 11, "", 0, "", 0),
 
       // 10
-      scene("What " + fella_string +
+      scene("What " + pcn +
                 " assumes now to be the PMC of the company round the corner, "
                 "and start to raise something " +
-                fella_string + " dives for cover and the soldiers are zapped",
+                pcn + " dives for cover and the soldiers are zapped",
             "Brace", 11, "", 0, "", 0, "", 0),
 
       // 11
@@ -160,17 +149,17 @@ private:
             "...", 12, "", 0, "", 0, "", 0),
 
       // 12
-      scene(fella_string + " wakes up in a long thin hallway", "Get up", 32, "",
-            0, "", 0, "", 0),
+      scene(pcn + " wakes up in a long thin hallway", "Get up", 32, "", 0, "",
+            0, "", 0),
 
       // 13
-      scene(fella_string + " quickly steps into the restroom",
+      scene(pcn + " quickly steps into the restroom",
             "The people who entered start talking about how some of the "
             "newbies have been getting marked for 'expirey' and that in the "
             "past it just meant getting thrown onto the street, they start "
             "to "
             "open the door that " +
-                fella_string + " and panick",
+                pcn + " and panick",
             16, &time_warn, "Look around", 15, "", 0, "", 0, "", 0),
 
       // 14  NOTE: UNUSED
@@ -180,33 +169,30 @@ private:
       scene("They see a vent and start to kick it open, after it pops off "
             "with "
             "a loud bang " +
-                fella_string + " quickly jumps in...",
-            fella_string +
-                " is then smitted by an eletric charge, as they convulse "
-                "they "
-                "see on the ceiling a series of symbols... <- -> -> <- ↓",
+                pcn + " quickly jumps in...",
+            pcn + " is then smitted by an eletric charge, as they convulse "
+                  "they "
+                  "see on the ceiling a series of symbols... <- -> -> <- ↓",
             49, &time_warn_2, "Start crawling", 19, "", 0, "", 0, "", 0),
 
       // 16
-      scene(fella_string +
-                " is then slapped, punched and thrown around for a bit",
+      scene(pcn + " is then slapped, punched and thrown around for a bit",
             "wake up", 17, "", 0, "", 0, "", 0),
 
       // 17
-      scene(fella_string + " is casted onto the street, and limps away...", "",
-            0, "", 0, "", 0, "", 0, &player_has_won),
+      scene(pcn + " is casted onto the street, and limps away...", "", 0, "", 0,
+            "", 0, "", 0, &player_has_won),
 
       // 18
       scene("Another split...", "They sit still...", 48, "Go left", 48,
             "Go straight", 48, "Go right", 48, "", 0),
 
       // 19
-      scene(fella_string +
-                " starts to akwarding shuffle and soon finds a split",
+      scene(pcn + " starts to akwarding shuffle and soon finds a split",
             "Go left", 20, "Go right", 18, "", 0, "", 0),
 
       // 20
-      scene(fella_string + "hears people below...", "They sit still...", 48,
+      scene(pcn + "hears people below...", "They sit still...", 48,
             "Go straight", 48, "Go right", 21, "", 0, "", 0),
 
       // 21
@@ -230,20 +216,20 @@ private:
 
       // 25
       scene("As they finish that corner, they now see a new split, then " +
-                fella_string +
+                pcn +
                 " hears wispers, and feels pricks on the back of their neck, "
                 "something compels them to go right...",
             "Go down", 27, "Go straight", 48, "Go right", 26, "", 0),
 
       // 26
-      scene("The sound of rain starts to get closer and " + fella_string +
+      scene("The sound of rain starts to get closer and " + pcn +
                 " feels a cold breeze, with a glint of light at the end...",
             "Go back", 25, "Continue forward", 47, "", 0, "", 0),
 
       // 27
       scene("Lying in the vent is a small... thing? its form changes "
             "constantly but something tells " +
-                fella_string + " it's what was wispering...",
+                pcn + " it's what was wispering...",
             "The thing starts to move more violently, making an awful noise "
             "and eventually grinding sound as it soon disappears, at the "
             "same "
@@ -251,37 +237,34 @@ private:
             29, "Grab it", 28, "Leave it", 30, "", 0, "", 0, &print_object),
 
       // 28
-      scene(fella_string +
+      scene(pcn +
                 "reaches out for it, the pricking sensation for earlier gets "
                 "stronger but after grabbing the object, it stops spinning "
                 "and "
                 "doing the weird pricking thing... " +
-                fella_string +
-                "is relieved, but now notices the vents are silver",
+                pcn + "is relieved, but now notices the vents are silver",
             "Continue forward", 29, "", 0, "", 0, "", 0, &get_object),
 
       // 29
-      scene("The metal suddenly gives out, " + fella_string +
+      scene("The metal suddenly gives out, " + pcn +
                 " starts to fall, eventually hitting something solid...",
             "wake up", 12, "", 0, "", 0, "", 0),
 
       // 30
-      scene(fella_string +
-                " hears a popping noise, as their legs start to feel "
-                "fuzzy they pass out",
+      scene(pcn + " hears a popping noise, as their legs start to feel "
+                  "fuzzy they pass out",
             "wake up", 31, "", 0, "", 0, "", 0, &get_mls),
 
       // 31
-      scene(fella_string +
-                " wakes up in a long but thin hallway, as they try to "
-                "stand up "
-                "they trip over something metal. As they come to they see "
-                "strange metal prosthetics replacing what used to be their "
-                "legs",
+      scene(pcn + " wakes up in a long but thin hallway, as they try to "
+                  "stand up "
+                  "they trip over something metal. As they come to they see "
+                  "strange metal prosthetics replacing what used to be their "
+                  "legs",
             "Get up", 32, "", 0, "", 0, "", 0),
 
       // 32
-      scene("The hall starts to get longer, " + fella_string +
+      scene("The hall starts to get longer, " + pcn +
                 " hears a loud crashing noise behind them",
             "", 49, "Run", 35, "Lie down", 0, "", 0, "", 0),
 
@@ -293,26 +276,25 @@ private:
       // 34
       scene("The walls start to fall away, and soon so does the floor as it "
             "turns into a thick liquid, " +
-                fella_string + " struggles but soon passes out.",
+                pcn + " struggles but soon passes out.",
             "wake up", 12, "", 0, "", 0, "", 0),
       // 35
-      scene(fella_string + " starts to run", "Turn around", 37, "Continue", 36,
-            "", 0, "", 0),
+      scene(pcn + " starts to run", "Turn around", 37, "Continue", 36, "", 0,
+            "", 0),
 
       // 36
-      scene(fella_string +
-                " sees the walls start to silver over again, and "
-                "dives for the end of the hall, there is a flash of white "
-                "and "
-                "yet again they pass out, god this trope is getting anoyying",
+      scene(pcn + " sees the walls start to silver over again, and "
+                  "dives for the end of the hall, there is a flash of white "
+                  "and "
+                  "yet again they pass out, god this trope is getting anoyying",
             "wake up (for like the 5th time)", 17, "", 0, "", 0, "", 0),
 
       // 37
       scene("The wall closes in", "Turn around", 33, "", 0, "", 0, "", 0),
 
       // 38
-      scene(fella_string + " starts to feel a somewhat fuzzy feeling all "
-                           "over their body",
+      scene(pcn + " starts to feel a somewhat fuzzy feeling all "
+                  "over their body",
             "", 0, "", 0, "", 0, "", 0),
 
       // 39
@@ -332,20 +314,18 @@ private:
       // 46
       scene("", "", 0, "", 0, "", 0, "", 0),
       // 47
-      scene(fella_string +
-                " gets to a vent, kicks it open and falls onto a street",
+      scene(pcn + " gets to a vent, kicks it open and falls onto a street",
             "look up", 17, "", 0, "", 0, "", 0),
 
       // 48
-      scene(fella_string +
-                " starts to feel the electricty build, they are then zapped",
+      scene(pcn + " starts to feel the electricty build, they are then zapped",
             "", 0, "", 0, "", 0, "", 0, &player_is_kill),
       // 49
-      scene(fella_string + " is dead.", "", 0, "", 0, "", 0, "", 0,
-            &player_is_kill),
+      scene(pcn + " is dead.", "", 0, "", 0, "", 0, "", 0, &player_is_kill),
   };
 
 public:
+  sceneMan(String pcn) { this->pcn = pcn; };
   timeMan *timer;
 
   void set_difficulty(int target_difficulty) {

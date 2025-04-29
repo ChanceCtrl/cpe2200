@@ -10,6 +10,9 @@ void setup() {
 }
 
 void loop() {
+  char fella[100];
+  String string_fella = "";
+
   // Get the name
   Serial.print("Whats is their name?\n");
   Serial.readBytesUntil('\r', fella, sizeof(fella) - 1);
@@ -39,6 +42,8 @@ void loop() {
     while (Serial.available())
       Serial.read();
   }
+
+  sceneMan game(string_fella);
 
   game.set_difficulty(target_dif);
 
